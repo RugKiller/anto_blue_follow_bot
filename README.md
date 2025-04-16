@@ -2,6 +2,14 @@
 
 一个Chrome扩展，用于自动搜索并回复蓝V认证用户的推文，实现互关功能。
 
+## 演示视频
+
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=h6KRZvqAhYg">
+    <img src="https://img.youtube.com/vi/h6KRZvqAhYg/maxresdefault.jpg" alt="演示视频" width="800">
+  </a>
+</div>
+
 ## 功能特点
 
 - 🔍 自定义搜索关键词
