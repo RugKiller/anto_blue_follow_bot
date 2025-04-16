@@ -6,17 +6,11 @@
   "permissions": [
     "cookies",
     "sidePanel",
-    "storage",
     "activeTab",
-    "tabs",
-    "clipboardWrite",
-    "scripting"
+    "tabs"
   ],
   "host_permissions": [
-    "http://*/*",
-    "https://*/*",
-    "https://x.com/*",
-    "https://twitter.com/*"
+    "https://x.com/*"
   ],
   "side_panel": {
     "default_path": "sidebar.html"
