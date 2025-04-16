@@ -74,8 +74,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 显示结果的函数
   function showResults(data) {
+    console.log('显示结果:', data);
+    
     // 隐藏加载提示
     replyLoading.style.display = 'none';
+    
+    // 显示结果区域
+    replyResult.style.display = 'block';
+    replyResultContent.style.display = 'block';
     
     // 清空之前的结果
     followList.innerHTML = '';
@@ -84,24 +90,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // 显示关注列表
     if (data.follow_list && data.follow_list.length > 0) {
       data.follow_list.forEach(username => {
-        followList.appendChild(createUserLink(username));
+        const link = createUserLink(username);
+        followList.appendChild(link);
       });
-    } else {
-      followList.textContent = '暂无成功关注的用户';
     }
     
     // 显示回复列表
     if (data.reply_list && data.reply_list.length > 0) {
       data.reply_list.forEach(username => {
-        replyList.appendChild(createUserLink(username));
+        const link = createUserLink(username);
+        replyList.appendChild(link);
       });
-    } else {
-      replyList.textContent = '暂无成功回复的用户';
     }
-    
-    // 显示结果区域
-    replyResult.style.display = 'block';
-    replyResultContent.style.display = 'block';
   }
 
   // 更新状态的函数
@@ -140,9 +140,9 @@ document.addEventListener('DOMContentLoaded', function() {
     showToast('开始自动回复...');
 
     // 显示加载提示
-    if (replyResult) replyResult.style.display = 'block';
-    if (replyLoading) replyLoading.style.display = 'block';
-    if (replyResultContent) replyResultContent.style.display = 'none';
+    replyResult.style.display = 'block';
+    replyLoading.style.display = 'block';
+    replyResultContent.style.display = 'none';
 
     try {
       // 1. 跳转到 X.com 搜索页面
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('获取Cookie或发送请求失败:', error);
         showToast('操作失败：' + error.message);
         // 隐藏加载提示
-        if (replyLoading) replyLoading.style.display = 'none';
+        replyLoading.style.display = 'none';
       }
 
     } catch (error) {
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // 出错时重置状态
       updateStatus(replyStatus, false);
       // 隐藏加载提示
-      if (replyLoading) replyLoading.style.display = 'none';
+      replyLoading.style.display = 'none';
     }
   });
 
