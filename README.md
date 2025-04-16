@@ -1,15 +1,44 @@
-# CookieTool
-Chrome Plugin ，Used to get current page cookies
-![readme](https://github.com/wenterwang/CookieTool/assets/18556507/8ab6df00-aace-4cd1-b917-5cd3f4294831)
+# 蓝V互关机器人
 
-# Chrome插件获取当前页面cookie已经发布
-## 下载地址：
-https://chromewebstore.google.com/detail/cookie-tool/gfmallmkikahpafdljpnolhgbhgkheja?hl=zh-CN&utm_source=ext_sidebar
-名称Cookie Tool 搜索ID gfmallmkikahpafdljpnolhgbhgkheja就能体验
-## 开发过程文章 
-https://blog.csdn.net/wdays83892469/article/details/135311599
-## 公众号 
-https://mp.weixin.qq.com/s/zxhBKa9VgGqnmqnhzMQ_yg
-## Git地址 
-https://github.com/wenterwang/CookieTool
-欢迎有需求的朋友下载体验，多多好评，有不满意的地方和期望的改进可以通过issue联系我开源共建
+一个Chrome扩展，用于自动搜索并回复蓝V认证用户的推文，实现互关功能。
+
+## 功能特点
+
+- 🔍 自定义搜索关键词
+- 🤖 自动回复推文
+- ✅ 自动关注蓝V认证用户
+- ⚡ 智能防检测机制
+- 📊 实时显示操作结果
+
+## 安装说明
+
+1. 下载项目代码
+2. 打开Chrome浏览器，进入扩展程序页面（chrome://extensions/）
+3. 开启"开发者模式"
+4. 点击"加载已解压的扩展程序"
+5. 选择项目文件夹
+
+## 使用说明
+
+1. 设置关注&回复次数（1-10次）
+2. 设置推特搜索关键词（默认为"#蓝V互关"）
+3. 设置回复内容（默认为"求关注"）
+4. 点击"开始"按钮执行自动回复
+5. 等待处理完成，查看结果
+6. 随时可以点击"停止"按钮终止操作
+
+## 注意事项
+
+- 建议不要设置过大的关注&回复次数，否则容易被检测到机器人操作
+- 点击开始后请耐心等待，系统会自动设置随机等待间隔时间
+- 只关注蓝V认证的用户
+- 请合理使用，避免频繁操作
+
+## 联系我们
+
+- X: [@pumptools_me](https://x.com/pumptools_me)
+- 官网: [pumptools.me](https://pumptools.me/)
+
+## 免责声明
+
+本扩展仅供学习和研究使用，请勿用于任何非法用途。使用本扩展产生的任何后果由使用者自行承担。

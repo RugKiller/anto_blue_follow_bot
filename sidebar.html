@@ -1,122 +1,322 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>蓝V互关机器人</title>
     <meta charset="UTF-8">
     <script src="sidebar.js"></script>
     <style>
+      :root {
+        --primary-color: #1da1f2;
+        --success-color: #17bf63;
+        --danger-color: #e0245e;
+        --background-color: #f7f9fa;
+        --text-color: #14171a;
+        --border-color: #e1e8ed;
+        --hover-color: #f5f8fa;
+      }
+
       body {
-        font-family: Arial, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         margin: 0;
         padding: 15px;
         width: 100%;
         height: 100vh;
         box-sizing: border-box;
         overflow-y: auto;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        padding-bottom: 100px;
       }
+
       .section {
         margin-bottom: 20px;
-        padding: 15px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
+        padding: 20px;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
         background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
       }
+
+      .section:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
       .section-title {
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: #333;
-      }
-      .form-group {
-        margin-bottom: 10px;
-      }
-      label {
-        display: block;
-        margin-bottom: 5px;
-      }
-      input[type="number"], input[type="text"] {
-        width: calc(100% - 12px);
-        padding: 5px;
-        border: 1px solid #ddd;
-        border-radius: 3px;
-      }
-      .button-group {
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: var(--text-color);
+        font-size: 18px;
         display: flex;
-        gap: 10px;
-        margin-top: 10px;
+        align-items: center;
+        gap: 8px;
       }
-      button {
-        padding: 5px 15px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-        transition: opacity 0.2s;
-      }
-      button:hover {
-        opacity: 0.9;
-      }
-      .start-btn {
-        background-color: #4CAF50;
-        color: white;
-      }
-      .stop-btn {
-        background-color: #f44336;
-        color: white;
-      }
-      .get-cookie-btn {
-        background-color: #2196F3;
-        color: white;
-        width: 100%;
-        padding: 10px;
+
+      .form-group {
         margin-bottom: 15px;
       }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--text-color);
+        font-size: 14px;
+      }
+
+      input[type="number"], input[type="text"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.2s ease;
+        background-color: white;
+      }
+
+      input[type="number"]:focus, input[type="text"]:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.1);
+      }
+
+      .button-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 15px;
+      }
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-weight: 600;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+      }
+
+      .start-btn {
+        background-color: var(--success-color);
+        color: white;
+      }
+
+      .start-btn:hover {
+        background-color: #15a955;
+      }
+
+      .stop-btn {
+        background-color: var(--danger-color);
+        color: white;
+      }
+
+      .stop-btn:hover {
+        background-color: #c01e4e;
+      }
+
       #toast {
         display: none;
         position: fixed;
-        bottom: 10px;
+        bottom: 20px;
         left: 50%;
         transform: translateX(-50%);
-        background-color: #333;
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 5px;
+        background-color: var(--text-color);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
         white-space: nowrap;
         z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        animation: slideUp 0.3s ease;
       }
-      /* 状态指示器样式 */
+
+      @keyframes slideUp {
+        from {
+          transform: translate(-50%, 100px);
+          opacity: 0;
+        }
+        to {
+          transform: translate(-50%, 0);
+          opacity: 1;
+        }
+      }
+
       .status-indicator {
         display: inline-block;
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
-        margin-left: 5px;
+        margin-left: 8px;
+        transition: all 0.3s ease;
       }
+
       .status-active {
-        background-color: #4CAF50;
+        background-color: var(--success-color);
+        box-shadow: 0 0 8px var(--success-color);
       }
+
       .status-inactive {
-        background-color: #ccc;
+        background-color: #aab8c2;
+      }
+
+      .result-section {
+        margin-top: 20px;
+        padding: 15px;
+        border-top: 1px solid var(--border-color);
+        background-color: var(--hover-color);
+        border-radius: 8px;
+      }
+
+      .loading {
+        text-align: center;
+        color: var(--text-color);
+        padding: 15px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .loading::after {
+        content: "";
+        width: 16px;
+        height: 16px;
+        border: 2px solid var(--primary-color);
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .result-group {
+        margin-bottom: 20px;
+      }
+
+      .result-group h4 {
+        margin: 0 0 10px 0;
+        color: var(--text-color);
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .user-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .user-link {
+        display: inline-block;
+        padding: 6px 12px;
+        background: white;
+        border-radius: 6px;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-size: 14px;
+        border: 1px solid var(--border-color);
+        transition: all 0.2s ease;
+      }
+
+      .user-link:hover {
+        background: var(--hover-color);
+        border-color: var(--primary-color);
+        transform: translateY(-1px);
+      }
+
+      /* 使用说明样式 */
+      .instructions {
+        color: #657786;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .instructions p {
+        margin: 8px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .instructions p::before {
+        content: "•";
+        color: var(--primary-color);
+        font-weight: bold;
+      }
+
+      /* 联系我们的样式 */
+      .contact-section {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        padding: 12px 20px;
+        border-top: 1px solid var(--border-color);
+        z-index: 1000;
+      }
+
+      .contact-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 8px;
+      }
+
+      .contact-links {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        justify-content: center;
+      }
+
+      .contact-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: var(--text-color);
+        font-size: 13px;
+        padding: 6px 12px;
+        transition: all 0.2s ease;
+        border-radius: 6px;
+      }
+
+      .contact-link:hover {
+        color: var(--primary-color);
+        background-color: var(--hover-color);
+      }
+
+      .contact-icon {
+        font-size: 16px;
+        width: 20px;
+        text-align: center;
       }
     </style>
   </head>
   <body>
-    <!-- 获取Cookie按钮 -->
-    <button id="get-cookies" class="get-cookie-btn">获取Cookie</button>
-
-    <!-- 添加Cookie显示区域 -->
-    <div class="section">
-      <div class="section-title">Cookie内容</div>
-      <div class="cookie-display-container">
-        <textarea id="cookie-display" readonly></textarea>
-        <button id="copy-cookies" class="copy-btn">复制</button>
-      </div>
-    </div>
-
     <!-- 使用说明 -->
     <div class="section">
       <div class="section-title">使用说明</div>
-      <p>1. 首先点击"获取Cookie"按钮获取登录信息</p>
-      <p>2. 选择需要的功能（自动回复或自动关注）</p>
-      <p>3. 设置相应参数后点击开始按钮</p>
-      <p>4. 随时可以点击停止按钮终止操作</p>
+      <div class="instructions">
+        <p>基本逻辑说明：根据设置关键词搜索最新推文，然后自动回复消息，并且关注发推人（只关注蓝V认证的）</p>
+        <p>关注&回复次数，建议不要太大，否则容易被检测到机器人操作从而失败</p>
+        <p>点击开始后不要着急，我们有随机等待间隔时间，最大限度保证不会被检测到机器操作</p>
+        <p>随时可以点击停止按钮终止操作</p>
+      </div>
     </div>
 
     <!-- 自动回复模块 -->
@@ -126,12 +326,12 @@
         <span class="status-indicator" id="reply-status"></span>
       </div>
       <div class="form-group">
-        <label>回复次数 (1-30次)：</label>
-        <input type="number" id="reply-count" min="1" max="30" value="1">
+        <label>关注&回复次数 (1-10次)：</label>
+        <input type="number" id="reply-count" min="1" max="10" value="1">
       </div>
       <div class="form-group">
-        <label>回复间隔 (1-10秒)：</label>
-        <input type="number" id="reply-interval" min="1" max="10" value="1">
+        <label>推特搜索关键词：</label>
+        <input type="text" id="search-keyword" value="#蓝V互关">
       </div>
       <div class="form-group">
         <label>回复内容：</label>
@@ -141,28 +341,39 @@
         <button class="start-btn" id="start-reply">开始</button>
         <button class="stop-btn" id="stop-reply">停止</button>
       </div>
-    </div>
-
-    <!-- 自动关注模块 -->
-    <div class="section">
-      <div class="section-title">
-        自动关注蓝V互关用户
-        <span class="status-indicator" id="follow-status"></span>
-      </div>
-      <div class="form-group">
-        <label>关注数量 (1-10个)：</label>
-        <input type="number" id="follow-count" min="1" max="10" value="1">
-      </div>
-      <div class="form-group">
-        <label>关注间隔 (1-10秒)：</label>
-        <input type="number" id="follow-interval" min="1" max="10" value="1">
-      </div>
-      <div class="button-group">
-        <button class="start-btn" id="start-follow">开始</button>
-        <button class="stop-btn" id="stop-follow">停止</button>
+      <!-- 添加结果展示区域 -->
+      <div class="result-section" id="reply-result" style="display: none;">
+        <div class="loading" id="reply-loading" style="display: none;">
+          正在处理中，请稍等...
+        </div>
+        <div class="result-content" id="reply-result-content" style="display: none;">
+          <div class="result-group">
+            <h4>成功关注的用户：</h4>
+            <div id="follow-list" class="user-list"></div>
+          </div>
+          <div class="result-group">
+            <h4>成功回复的用户：</h4>
+            <div id="reply-list" class="user-list"></div>
+          </div>
+        </div>
       </div>
     </div>
 
     <div id="toast"></div>
+
+    <!-- 联系我们的模块 -->
+    <div class="contact-section">
+      <div class="contact-title">联系我们</div>
+      <div class="contact-links">
+        <a href="https://x.com/pumptools_me" target="_blank" class="contact-link">
+          <span class="contact-icon">𝕏</span>
+          <span>X: @pumptools_me</span>
+        </a>
+        <a href="https://pumptools.me/" target="_blank" class="contact-link">
+          <span class="contact-icon">🌐</span>
+          <span>官网: pumptools.me</span>
+        </a>
+      </div>
+    </div>
   </body>
 </html> 
