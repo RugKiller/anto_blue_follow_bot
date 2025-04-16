@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "蓝V互关机器人",
+  "version": "0.0.1",
+  "author": "wenterwang",
+  "permissions": [
+    "cookies",
+    "sidePanel",
+    "storage",
+    "activeTab",
+    "tabs",
+    "clipboardWrite",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "https://x.com/*",
+    "https://twitter.com/*"
+  ],
+  "side_panel": {
+    "default_path": "sidebar.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}

@@ -1,0 +1,168 @@
+<html>
+  <head>
+    <title>蓝V互关机器人</title>
+    <meta charset="UTF-8">
+    <script src="sidebar.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 15px;
+        width: 100%;
+        height: 100vh;
+        box-sizing: border-box;
+        overflow-y: auto;
+      }
+      .section {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: white;
+      }
+      .section-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
+      }
+      .form-group {
+        margin-bottom: 10px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      input[type="number"], input[type="text"] {
+        width: calc(100% - 12px);
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+      }
+      .button-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      button {
+        padding: 5px 15px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+      button:hover {
+        opacity: 0.9;
+      }
+      .start-btn {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .stop-btn {
+        background-color: #f44336;
+        color: white;
+      }
+      .get-cookie-btn {
+        background-color: #2196F3;
+        color: white;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+      }
+      #toast {
+        display: none;
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #333;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        white-space: nowrap;
+        z-index: 1000;
+      }
+      /* 状态指示器样式 */
+      .status-indicator {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-left: 5px;
+      }
+      .status-active {
+        background-color: #4CAF50;
+      }
+      .status-inactive {
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 获取Cookie按钮 -->
+    <button id="get-cookies" class="get-cookie-btn">获取Cookie</button>
+
+    <!-- 添加Cookie显示区域 -->
+    <div class="section">
+      <div class="section-title">Cookie内容</div>
+      <div class="cookie-display-container">
+        <textarea id="cookie-display" readonly></textarea>
+        <button id="copy-cookies" class="copy-btn">复制</button>
+      </div>
+    </div>
+
+    <!-- 使用说明 -->
+    <div class="section">
+      <div class="section-title">使用说明</div>
+      <p>1. 首先点击"获取Cookie"按钮获取登录信息</p>
+      <p>2. 选择需要的功能（自动回复或自动关注）</p>
+      <p>3. 设置相应参数后点击开始按钮</p>
+      <p>4. 随时可以点击停止按钮终止操作</p>
+    </div>
+
+    <!-- 自动回复模块 -->
+    <div class="section">
+      <div class="section-title">
+        自动回复蓝V互关最新推文
+        <span class="status-indicator" id="reply-status"></span>
+      </div>
+      <div class="form-group">
+        <label>回复次数 (1-30次)：</label>
+        <input type="number" id="reply-count" min="1" max="30" value="1">
+      </div>
+      <div class="form-group">
+        <label>回复间隔 (1-10秒)：</label>
+        <input type="number" id="reply-interval" min="1" max="10" value="1">
+      </div>
+      <div class="form-group">
+        <label>回复内容：</label>
+        <input type="text" id="reply-content" value="求关注">
+      </div>
+      <div class="button-group">
+        <button class="start-btn" id="start-reply">开始</button>
+        <button class="stop-btn" id="stop-reply">停止</button>
+      </div>
+    </div>
+
+    <!-- 自动关注模块 -->
+    <div class="section">
+      <div class="section-title">
+        自动关注蓝V互关用户
+        <span class="status-indicator" id="follow-status"></span>
+      </div>
+      <div class="form-group">
+        <label>关注数量 (1-10个)：</label>
+        <input type="number" id="follow-count" min="1" max="10" value="1">
+      </div>
+      <div class="form-group">
+        <label>关注间隔 (1-10秒)：</label>
+        <input type="number" id="follow-interval" min="1" max="10" value="1">
+      </div>
+      <div class="button-group">
+        <button class="start-btn" id="start-follow">开始</button>
+        <button class="stop-btn" id="stop-follow">停止</button>
+      </div>
+    </div>
+
+    <div id="toast"></div>
+  </body>
+</html> 
