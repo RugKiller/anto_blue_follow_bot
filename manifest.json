@@ -1,26 +1,41 @@
 {
   "manifest_version": 3,
-  "name": "蓝V互关机器人",
-  "version": "0.0.1",
-  "author": "wenterwang",
+  "name": "蓝V互关",
+  "version": "1.0.0",
+  "description": "完全模拟手动操作进行自动关注页面的推特账号",
+  "icons": {
+    "48": "icon.png",
+    "128": "icon.png"
+  },
   "permissions": [
-    "cookies",
-    "sidePanel",
     "activeTab",
+    "storage",
+    "scripting",
     "tabs"
   ],
   "host_permissions": [
+    "https://twitter.com/*",
     "https://x.com/*"
   ],
-  "side_panel": {
-    "default_path": "sidebar.html"
+  "action": {
+    "default_popup": "popup.html"
   },
   "background": {
     "service_worker": "background.js"
   },
-  "icons": {
-    "16": "icon.png",
-    "48": "icon.png",
-    "128": "icon.png"
-  }
-}
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*", "https://x.com/*"],
+      "js": ["auto_view.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["auto_follow.js"],
+      "matches": ["https://twitter.com/*", "https://x.com/*"]
+    }
+  ]
+} 

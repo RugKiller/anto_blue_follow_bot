@@ -1,130 +1,84 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>蓝V互关机器人</title>
-    <meta charset="UTF-8">
-    <script src="popup.js"></script>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 15px;
-        min-width: 300px;
-      }
-      .section {
-        margin-bottom: 20px;
-        padding: 15px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-      }
-      .section-title {
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: #333;
-      }
-      .form-group {
-        margin-bottom: 10px;
-      }
-      label {
-        display: block;
-        margin-bottom: 5px;
-      }
-      input[type="number"], input[type="text"] {
-        width: 100%;
-        padding: 5px;
-        border: 1px solid #ddd;
-        border-radius: 3px;
-      }
-      .button-group {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-      }
-      button {
-        padding: 5px 15px;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-      }
-      .start-btn {
-        background-color: #4CAF50;
-        color: white;
-      }
-      .stop-btn {
-        background-color: #f44336;
-        color: white;
-      }
-      .get-cookie-btn {
-        background-color: #2196F3;
-        color: white;
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-      }
-      #toast {
-        display: none;
-        position: fixed;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #333;
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 5px;
-        white-space: nowrap;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- 获取Cookie按钮 -->
-    <button id="get-cookies" class="get-cookie-btn">获取Cookie</button>
-
-    <!-- 使用说明 -->
-    <div class="section">
-      <div class="section-title">使用说明</div>
-      <p>1. 首先点击"获取Cookie"按钮获取登录信息</p>
-      <p>2. 选择需要的功能（自动回复或自动关注）</p>
-      <p>3. 设置相应参数后点击开始按钮</p>
-      <p>4. 随时可以点击停止按钮终止操作</p>
+<head>
+  <meta charset="UTF-8">
+  <title>蓝V互关</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 标题区域 -->
+    <div class="header">
+      <h1>蓝V互关</h1>
     </div>
 
-    <!-- 自动回复模块 -->
-    <div class="section">
-      <div class="section-title">自动回复蓝V互关最新推文</div>
-      <div class="form-group">
-        <label>回复次数 (1-30次)：</label>
-        <input type="number" id="reply-count" min="1" max="30" value="1">
+    <!-- 通知区域 -->
+    <div class="notification">
+      <p>AI推特自动营销工具火热上线，欢迎使用！</p>
+    </div>
+
+    <!-- 操作区域 -->
+    <div class="control-panel">
+      <div class="settings">
+        <div class="setting-item" style="width:100%;justify-content:flex-start;">
+          <span>
+            <b>使用说明：</b><br>
+            1. 你可以打开任意包含 <span class="highlight">推特用户</span> 或 <span class="highlight">帖子页面</span>，点击 <b>开始按钮</b>，将会自动关注页面中的所有用户，<span class="highlight">完全模拟人工操作</span>。<br>
+            <span class="em">2. 任务进行中时，你可以切换到其他页面，也可以关闭插件，但是不要操作自动控制的页面，绝对安全！</span>
+          </span>
+        </div>
+        <div class="setting-item" style="width:100%;justify-content:flex-start;">
+          <span>
+            <a href="https://x.com/search?q=%23%E8%93%9DV%E4%BA%92%E5%85%B3&src=recent_search_click" target="_blank" class="blue-link">蓝V互关你可以点这里</a>
+          </span>
+        </div>
+        <div class="setting-item">
+          <label for="browseInterval">操作间隔（秒）：</label>
+          <input type="number" id="browseInterval" min="1" value="3">
+        </div>
+        <div class="setting-item">
+          <label for="maxCount">最多关注用户数：</label>
+          <input type="number" id="maxCount" min="1" value="50">
+        </div>
       </div>
-      <div class="form-group">
-        <label>回复间隔 (1-10秒)：</label>
-        <input type="number" id="reply-interval" min="1" max="10" value="1">
-      </div>
-      <div class="form-group">
-        <label>回复内容：</label>
-        <input type="text" id="reply-content" value="求关注">
-      </div>
-      <div class="button-group">
-        <button class="start-btn" id="start-reply">开始</button>
-        <button class="stop-btn" id="stop-reply">停止</button>
+      <div class="controls">
+        <button id="startBtn" class="btn">开始</button>
+        <button id="stopBtn" class="btn" disabled>停止</button>
       </div>
     </div>
 
-    <!-- 自动关注模块 -->
-    <div class="section">
-      <div class="section-title">自动关注蓝V互关用户</div>
-      <div class="form-group">
-        <label>关注数量 (1-10个)：</label>
-        <input type="number" id="follow-count" min="1" max="10" value="1">
+    <!-- 统计区域 -->
+    <div class="statistics">
+      <h2>本次任务完成情况（每次开始数据置0）</h2>
+      <div class="stat-item">
+        <span>已浏览用户：</span>
+        <span id="browsedCount">0</span>
       </div>
-      <div class="form-group">
-        <label>关注间隔 (1-10秒)：</label>
-        <input type="number" id="follow-interval" min="1" max="10" value="1">
+      <div class="stat-item">
+        <span>已关注用户：</span>
+        <span id="followedCount">0</span>
       </div>
-      <div class="button-group">
-        <button class="start-btn" id="start-follow">开始</button>
-        <button class="stop-btn" id="stop-follow">停止</button>
+      <div class="user-list">
+        <h3>已关注用户列表</h3>
+        <div id="followedUsers" class="user-list-content">
+          <!-- 用户列表将通过JS动态添加 -->
+        </div>
       </div>
     </div>
 
-    <div id="toast"></div>
-  </body>
-</html>
+    <!-- 联系信息 -->
+    <div class="contact">
+      <h2>联系我们</h2>
+      <div class="contact-item">
+        <span>推特：</span>
+        <a href="https://x.com/pumptools_me" target="_blank">@pumptools_me</a>
+      </div>
+      <div class="contact-item">
+        <span>官网：</span>
+        <a href="https://pumptools.me" target="_blank">pumptools.me</a>
+      </div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html> 
